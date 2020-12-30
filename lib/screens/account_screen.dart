@@ -4,11 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import'package:flutter/material.dart';
 
 class AccountScreen extends StatelessWidget {
+  final userId =FirebaseAuth.instance.currentUser.uid;
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       // ignore: deprecated_member_use
-      stream: Firestore.instance.collection('blog').orderBy('createdAt',descending: true).snapshots(),
+      stream: Firestore.instance.collection('blog').where('userId',isEqualTo:userId).orderBy('createdAt',descending: true).snapshots(),
       builder: (context,snapshot){
         if(!snapshot.hasData)
           return Center(
@@ -33,15 +34,24 @@ class AccountScreen extends StatelessWidget {
             Expanded(
               child: GridView.builder(
                 itemCount: allBlog.length,
-                itemBuilder: (context,index)=>allBlog[index]['userId'] == FirebaseAuth.instance.currentUser.uid ?
-                  Container(child: GridTile(child: Image.network(allBlog[index]['imageUrl'],
-                  fit: BoxFit.cover,),),
+                itemBuilder: (context,index)=>Container(
+                  child: GridTile(child: Image.network(allBlog[index]['imageUrl'],
+                  fit: BoxFit.cover,
+                    loadingBuilder:(BuildContext context, Widget child,ImageChunkEvent loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null ?
+                          loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                              : null,
+                        ),
+                      );
+                    },),),
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.pink,
                     ),
-                  ),) :
-                    null,
+                  ),),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: 2/2,

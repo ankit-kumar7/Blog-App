@@ -60,7 +60,8 @@ class _UserDataState extends State<UserData> {
                 child: userData == null ? CircularProgressIndicator(): spiner ? CircularProgressIndicator() :
                 CircleAvatar(
                   radius: 100,
-                  backgroundImage: NetworkImage(userData['userImage']),
+                  backgroundImage: NetworkImage(userData['userImage'],
+                  ),
                 ),
               ),
             ),
