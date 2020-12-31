@@ -88,7 +88,7 @@ class _GridViewWidgetState extends State<GridViewWidget> {
                           SizedBox(width: MediaQuery
                               .of(context)
                               .size
-                              .width * 0.25,),
+                              .width * 0.10,),
 
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,

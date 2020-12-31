@@ -3,6 +3,7 @@ import'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AllBlogScreen extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(

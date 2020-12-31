@@ -60,7 +60,7 @@ class _UserImageUpdateState extends State<UserImageUpdate> {
   Widget build(BuildContext context) {
     return IconButton(icon: Icon(Icons.add_a_photo_outlined),
         iconSize: 35,
-        color: Colors.white,
+        color: Colors.pink,
         onPressed: getUserImage,
     );
   }

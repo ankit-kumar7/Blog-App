@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'dart:io';
 
 
 class AuthenticationScreen extends StatefulWidget {
@@ -58,7 +59,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               setState(() {
                 _isLoading = false;
               });
-              Navigator.of(context).pop();
               Navigator.of(context).pushReplacementNamed('/bottomNavigation');
             },
             width: 120,
@@ -84,7 +84,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
               setState(() {
                 _isLoading = false;
               });
-              Navigator.of(context).pop();
               Navigator.of(context).pushReplacementNamed('/authenticationScreen');
             },
             width: 120,
@@ -99,22 +98,25 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   @override
   Widget build(BuildContext context) {
     final _objectHeight = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: _isLoading ? Center(child: CircularProgressIndicator()):SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top:_objectHeight*0.1),
-              child: Column(
-                children: [
-                  Image.asset('assets/logo.png',
-                  height: _objectHeight*0.2,),
-                  Image.asset('assets/sublogo.png'),
-                ],
+    return WillPopScope(
+      onWillPop:()=>exit(0),
+      child: Scaffold(
+        body: _isLoading ? Center(child: CircularProgressIndicator()):SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.only(top:_objectHeight*0.1),
+                child: Column(
+                  children: [
+                    Image.asset('assets/logo.png',
+                    height: _objectHeight*0.2,),
+                    Image.asset('assets/sublogo.png'),
+                  ],
+                ),
               ),
-            ),
-            AuthForm(userValue),
-          ],
+              AuthForm(userValue),
+            ],
+          ),
         ),
       ),
     );

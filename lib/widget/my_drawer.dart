@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 
 class MyDrawer extends StatelessWidget {
 
@@ -18,10 +17,23 @@ class MyDrawer extends StatelessWidget {
               child:ListView(
                 children: <Widget>[
                   UserAccountsDrawerHeader(
-                    accountName:userData==null ?CircularProgressIndicator():Text(userData['userName'],
-                    style: TextStyle(
-                      fontSize: 30,
-                    ),),
+                    accountName:Row(
+                      children: [
+                        userData==null ?CircularProgressIndicator():Text(userData['userName'],
+                          style: TextStyle(
+                            fontSize: 30,
+                          ),),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width*0.15,
+                        ),
+                        IconButton(
+                            icon: Icon(Icons.edit),
+                        onPressed: ()
+                          {
+
+                          },),
+                      ],
+                    ),
                     accountEmail: userData==null ?CircularProgressIndicator():Text(userData['userEmail'],
                     style: TextStyle(
                       fontSize: 15
@@ -56,7 +68,7 @@ class MyDrawer extends StatelessWidget {
                     {
                       await FirebaseAuth.instance.signOut();
                       Scaffold.of(context).showSnackBar(SnackBar(content: Text("You are logout"),));
-                      exit(0);
+                      Navigator.of(context).pushReplacementNamed('/authenticationScreen');
                     },
                   ),
                 ],

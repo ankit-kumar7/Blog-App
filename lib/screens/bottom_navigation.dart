@@ -3,6 +3,7 @@ import 'package:blog_app/screens/all_blogs_screen.dart';
 import 'package:blog_app/widget/my_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:blog_app/screens/addBlog_screen.dart';
+import 'dart:io';
 
 class MyBottomNavigationBar extends StatefulWidget {
   @override
@@ -25,9 +26,20 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
       _selectedIndex  = index;
     });
   }
+
+  Future<bool> changePage()
+  {
+    setState(() {
+      _selectedIndex = 0;
+    });
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () => _selectedIndex == 0 ? exit(0): changePage(),
+      child: Scaffold(
       appBar: AppBar(
         title: Text(_selectedIndex == 0 ? "Home" :
                     (_selectedIndex == 1) ? "Add Blog" : "Account"),
@@ -52,6 +64,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         currentIndex: _selectedIndex,
         onTap: _onTapIndex,
       ),
+        ),
     );
   }
 }

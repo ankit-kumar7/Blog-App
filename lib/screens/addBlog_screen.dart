@@ -82,23 +82,25 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return _selectImage ==  null ? Center(
-      child: FlatButton.icon(
-        label: Text("Click to add an image"),
-        icon: Icon(Icons.camera_alt_outlined),
-        onPressed:_imagePicker,
-      ),) :
-    spiner ? Center(child: CircularProgressIndicator(
-      backgroundColor: Colors.white10.withOpacity(0.25),
+    return WillPopScope(
+      onWillPop: ()=>Navigator.of(context).pushReplacementNamed('/bottomNavigation'),
+      child: _selectImage ==  null ? Center(
+        child: FlatButton.icon(
+          label: Text("Click to add an image"),
+          icon: Icon(Icons.camera_alt_outlined),
+          onPressed:_imagePicker,
+        ),) :
+      spiner ? Center(child: CircularProgressIndicator(
+        backgroundColor: Colors.white10.withOpacity(0.25),
       ),)
           : SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-              Container(
-                child: Image.file(_selectImage,
+        child: Column(
+          children: <Widget>[
+            Container(
+              child: Image.file(_selectImage,
                   height: MediaQuery.of(context).size.height*0.4,
                   width: MediaQuery.of(context).size.width),
-              ),
+            ),
             SizedBox(
               height: MediaQuery.of(context).size.height*0.05,
             ),
@@ -133,14 +135,15 @@ class _AddBlogScreenState extends State<AddBlogScreen> {
                 borderRadius: BorderRadius.circular(10),
               ),
               color: Theme.of(context).primaryColor,
-                child: Text("Add Blog",
+              child: Text("Add Blog",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                 ),),
-                onPressed: _storeDataToDatabase,
+              onPressed: _storeDataToDatabase,
             ),
-        ],
+          ],
+        ),
       ),
     );
   }

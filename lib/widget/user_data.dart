@@ -66,8 +66,8 @@ class _UserDataState extends State<UserData> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height*0.30,
-              left: MediaQuery.of(context).size.height*0.30,
+              top: 200,//MediaQuery.of(context).size.height*0.23,
+              left: 200,// MediaQuery.of(context).size.height*0.23,
               child: UserImageUpdate(userImage),
             ),
           ],
